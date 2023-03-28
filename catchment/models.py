@@ -22,7 +22,7 @@ def read_variable_from_csv(filename):
     dataset = pd.read_csv(filename, usecols=['Date', 'Site', 'Rainfall (mm)'])
 
     dataset = dataset.rename({'Date':'OldDate'}, axis='columns')
-    dataset['Date'] = [pd.to_datetime(x,dayfirst=True) for x in dataset['OldDate']]
+
     dataset = dataset.drop('OldDate', axis='columns')
 
     newdataset = pd.DataFrame(index=dataset['Date'].unique())
@@ -36,7 +36,14 @@ def read_variable_from_csv(filename):
 
 def daily_total(data):
     """Calculate the daily total of a Pandas DataFrame.
-    Index must be np.datetime64 compatible format."""
+
+
+    :param data: a Pandas dataframe
+    :raises Nothing - FIXME!
+    :returns a Pandas dataframe
+
+    Index must be np.datetime64 compatible format.
+    """
     return data.groupby(data.index.date).sum()
 
 def daily_mean(data):
@@ -46,19 +53,34 @@ def daily_mean(data):
 
     :param data: a Pandas dataframe
     :raises Nothing - FIXME!
-    :returns a single value as a ??? type?
+    :returns a Pandas dataframe
 
-    Index must be np.datetime64 compatible format."""
+    Index must be np.datetime64 compatible format.
+    """
     return data.groupby(data.index.date).mean()
 
 
 def daily_max(data):
-    """Calculate the daily max of a 2d data array.
-    Index must be np.datetime64 compatible format."""
+    """Calculate the daily max of of a 2D Pandas DataFrame
+    Uses the inbuilt Pandas groupby function to generate a mean value over
+    the column of interest
+
+    :param data: a Pandas dataframe
+    :raises Nothing - FIXME!
+    :returns a Pandas dataframe
+    Index must be np.datetime64 compatible format.
+    """
+
     return data.groupby(data.index.date).max()
 
 
 def daily_min(data):
-    """Calculate the daily min of a 2d data array.
-    Index must be np.datetime64 compatible format."""
+    """Calculate the daily min ofof a 2D Pandas DataFrame
+    Uses the inbuilt Pandas groupby function to generate a mean value over
+    the column of interest
+
+    :param data: a Pandas dataframe
+    :raises Nothing - FIXME!
+    :returns a Pandas dataframe
+    """
     return data.groupby(data.index.date).min()
