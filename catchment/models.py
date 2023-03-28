@@ -28,19 +28,26 @@ def read_variable_from_csv(filename):
     newdataset = pd.DataFrame(index=dataset['Date'].unique())
 
     for site in dataset['Site'].unique():
-        newdataset[site] = dataset[dataset['Site'] == site].set_index('Date')["Rainfall (mm)"]
+        newdataset[site] = dataset[dataset['Site'] == site].set_index('Date')['Rainfall (mm)']
 
     newdataset = newdataset.sort_index()
 
     return newdataset
 
 def daily_total(data):
-    """Calculate the daily total of a 2D data array.
+    """Calculate the daily total of a Pandas DataFrame.
     Index must be np.datetime64 compatible format."""
     return data.groupby(data.index.date).sum()
 
 def daily_mean(data):
-    """Calculate the daily mean of a 2d data array.
+    """Calculate the daily mean of a 2D Pandas DataFrame
+    Uses the inbuilt Pandas groupby function to generate a mean value over
+    the column of interest
+
+    :param data: a Pandas dataframe
+    :raises Nothing - FIXME!
+    :returns a single value as a ??? type?
+
     Index must be np.datetime64 compatible format."""
     return data.groupby(data.index.date).mean()
 
@@ -55,4 +62,3 @@ def daily_min(data):
     """Calculate the daily min of a 2d data array.
     Index must be np.datetime64 compatible format."""
     return data.groupby(data.index.date).min()
-
